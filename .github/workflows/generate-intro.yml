@@ -1,28 +1,11 @@
-name: Generate Intro Animation                                                                                                                                                         
-                                                                                                                                                                                       
-on:                                                                                                                                                                                    
-  workflow_dispatch:                                                                                                                                                                   
-    inputs:                                                                                                                                                                            
-      prefix:                                                                                                                                                                          
-        description: 'Output filename: intro-<prefix>.gif'                                                                                                                             
-        required: true                                                                                                                                                                 
-        default: 'dark'
-        type: string
-      theme:
-        description: 'agg color theme'
-        required: true
-        default: 'solarized-dark'
-        type: choice
-        options:
-          - solarized-dark
-          - solarized-light
-          - monokai
-          - dracula
-          - github-dark
-          - github-light
-          - nord
-          - gruvbox-dark
-          - gruvbox-light
+name: Generate Intro Animation
+
+on:
+  workflow_dispatch:
+
+env:
+  THEME_DARK: solarized-dark
+  THEME_LIGHT: solarized-light
 
 jobs:
   generate:
@@ -47,10 +30,7 @@ jobs:
             -c "./scripts/workspace-intro.sh" \
             recording.cast
 
-      - name: Convert to GIF
-        env:
-          AGG_THEME: ${{ inputs.theme }}
-          OUTPUT_PREFIX: ${{ inputs.prefix }}
+      - name: Convert to GIF (dark)
         run: |
           mkdir -p assets
 
@@ -61,21 +41,32 @@ jobs:
             --font-dir /fonts \
             --speed 1.5 \
             --fps-cap 15 \
-            --theme "$AGG_THEME" \
+            --theme "$THEME_DARK" \
             --last-frame-duration 3 \
             /data/recording.cast \
-            "/data/assets/intro-${OUTPUT_PREFIX}.gif"
+            /data/assets/intro-dark.gif
+
+      - name: Convert to GIF (light)
+        run: |
+          docker run --rm \
+            -v "$(pwd)":/data \
+            -v "/home/runner/.local/share/fonts":/fonts:ro \
+            agg:latest \
+            --font-dir /fonts \
+            --speed 1.5 \
+            --fps-cap 15 \
+            --theme "$THEME_LIGHT" \
+            --last-frame-duration 3 \
+            /data/recording.cast \
+            /data/assets/intro-light.gif
 
       - name: Commit
-        env:
-          OUTPUT_PREFIX: ${{ inputs.prefix }}
         run: |
           rm -f recording.cast
 
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add "assets/intro-${OUTPUT_PREFIX}.gif"
-          git diff --staged --quiet || git commit -m "chore: update intro animation (${OUTPUT_PREFIX})"
+          git add assets/intro-dark.gif assets/intro-light.gif
+          git diff --staged --quiet || git commit -m "chore: update intro animation"
           git pull --rebase
           git push
-
