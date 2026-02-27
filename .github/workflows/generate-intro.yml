@@ -9,7 +9,7 @@ env:
 
 jobs:
   generate:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     permissions:
       contents: write
@@ -17,6 +17,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup runner dependencies
+        run: |
+          chmod +x .github/main/scripts/runner.sh
+          sudo .github/main/scripts/runner.sh
 
       - name: Record animation
         run: |
@@ -36,9 +41,7 @@ jobs:
 
           docker run --rm \
             -v "$(pwd)":/data \
-            -v "/home/runner/.local/share/fonts":/fonts:ro \
             agg:latest \
-            --font-dir /fonts \
             --speed 1.5 \
             --fps-cap 15 \
             --theme "$THEME_DARK" \
@@ -50,9 +53,7 @@ jobs:
         run: |
           docker run --rm \
             -v "$(pwd)":/data \
-            -v "/home/runner/.local/share/fonts":/fonts:ro \
             agg:latest \
-            --font-dir /fonts \
             --speed 1.5 \
             --fps-cap 15 \
             --theme "$THEME_LIGHT" \
