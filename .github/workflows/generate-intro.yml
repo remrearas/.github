@@ -23,6 +23,8 @@ jobs:
           sudo .github/main/scripts/runner.sh
 
       - name: Record animation
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           export TERM=xterm-256color
           chmod +x scripts/workspace-intro.sh
