@@ -69,5 +69,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git add assets/intro-dark.gif assets/intro-light.gif
           git diff --staged --quiet || git commit -m "chore: update intro animation"
+          git checkout -- .
+          git clean -fd
           git pull --rebase
           git push
