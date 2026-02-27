@@ -217,7 +217,6 @@ main() {
     # ── Final prompt (cursor blinks for END_PAUSE seconds) ───────────────
     printf '%s' "$prompt"
     sleep "$END_PAUSE"
-    printf '\n'
 }
 
 # ═══════════════════════════════════════════════════════════════════════════
