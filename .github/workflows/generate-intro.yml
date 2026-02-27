@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  THEME_DARK: solarized-dark
-  THEME_LIGHT: solarized-light
+  AGG_THEME: github-dark
 
 jobs:
   generate:
@@ -35,31 +34,21 @@ jobs:
             -c "./scripts/workspace-intro.sh" \
             recording.cast
 
-      - name: Convert to GIF (dark)
+      - name: Convert to GIF
         run: |
           mkdir -p assets
 
           docker run --rm \
             -v "$(pwd)":/data \
+            -v "/usr/share/fonts":/fonts:ro \
             agg:latest \
+            --font-dir /fonts \
             --speed 1.5 \
             --fps-cap 15 \
-            --theme "$THEME_DARK" \
+            --theme "$AGG_THEME" \
             --last-frame-duration 3 \
             /data/recording.cast \
-            /data/assets/intro-dark.gif
-
-      - name: Convert to GIF (light)
-        run: |
-          docker run --rm \
-            -v "$(pwd)":/data \
-            agg:latest \
-            --speed 1.5 \
-            --fps-cap 15 \
-            --theme "$THEME_LIGHT" \
-            --last-frame-duration 3 \
-            /data/recording.cast \
-            /data/assets/intro-light.gif
+            /data/assets/intro.gif
 
       - name: Commit
         run: |
@@ -67,7 +56,7 @@ jobs:
 
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add assets/intro-dark.gif assets/intro-light.gif
+          git add assets/intro.gif
           git diff --staged --quiet || git commit -m "chore: update intro animation"
           git checkout -- .
           git clean -fd

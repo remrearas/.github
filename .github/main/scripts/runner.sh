@@ -15,7 +15,7 @@ echo
 # 1. Install asciinema
 # ─────────────────────────────────────────────────────────────
 
-echo "[1/3] Installing asciinema..."
+echo "[1/4] Installing asciinema..."
 
 if command -v asciinema &>/dev/null; then
     echo "  ✅ asciinema already installed: $(asciinema --version)"
@@ -29,16 +29,26 @@ fi
 # 2. Install additional dependencies
 # ─────────────────────────────────────────────────────────────
 
-echo "[2/3] Installing dependencies (jq, bc, curl)..."
+echo "[2/4] Installing dependencies (jq, bc, curl)..."
 
 apt-get install -y jq bc curl
 echo "  ✅ Dependencies installed"
 
 # ─────────────────────────────────────────────────────────────
-# 3. Build agg Docker image
+# 3. Install Noto Color Emoji font
 # ─────────────────────────────────────────────────────────────
 
-echo "[3/3] Building agg Docker image..."
+echo "[3/4] Installing Noto Color Emoji font..."
+
+apt-get install -y fonts-noto-color-emoji
+fc-cache -fv
+echo "  ✅ Noto Color Emoji installed"
+
+# ─────────────────────────────────────────────────────────────
+# 4. Build agg Docker image
+# ─────────────────────────────────────────────────────────────
+
+echo "[4/4] Building agg Docker image..."
 
 if docker images | grep -q "^agg "; then
     echo "  ⚠️  agg image exists, rebuilding..."
