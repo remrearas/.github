@@ -42,9 +42,7 @@ jobs:
 
           docker run --rm \
             -v "$(pwd)":/data \
-            -v "/usr/share/fonts":/fonts:ro \
             agg:latest \
-            --font-dir /fonts \
             --speed 1.5 \
             --fps-cap 15 \
             --theme "$AGG_THEME" \

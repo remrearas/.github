@@ -32,13 +32,8 @@ R='\033[0m'         # Reset
 B='\033[1m'         # Bold
 D='\033[2m'         # Dim
 
-# Regular foreground
-BLK='\033[30m'; RED='\033[31m'; GRN='\033[32m'; YEL='\033[33m'
-BLU='\033[34m'; MAG='\033[35m'; CYN='\033[36m'; WHT='\033[37m'
-
 # Bold foreground
-BBLK='\033[1;30m'; BRED='\033[1;31m'; BGRN='\033[1;32m'; BYEL='\033[1;33m'
-BBLU='\033[1;34m'; BMAG='\033[1;35m'; BCYN='\033[1;36m'; BWHT='\033[1;37m'
+BBLU='\033[1;34m'; BCYN='\033[1;36m'
 
 # Background (color palette row 1 — normal)
 BG_BLK='\033[40m'; BG_RED='\033[41m'; BG_GRN='\033[42m'; BG_YEL='\033[43m'

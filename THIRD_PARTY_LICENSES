@@ -30,8 +30,8 @@ TOOLS & DEPENDENCIES
 | curl       | 8.5.0   | curl License     | curl             |
 
 Versions reflect Ubuntu 24.04 (ubuntu-latest) packages. gh is preinstalled
-on the runner image. agg is built from the main branch of its repository as
-a Docker image.
+on the runner image. agg is built as a Docker image from a pinned commit of
+its repository (main, aae34b0, 2026-08-14); see AGG_REF in runner.sh.
 
 License URLs:
 
@@ -61,20 +61,16 @@ License URLs:
 FONTS
 ==============================================================================
 
-| Font             | Version | License | SPDX Identifier |
-|------------------|---------|---------|-----------------|
-| JetBrains Mono   | 2.304   | OFL-1.1 | OFL-1.1         |
-| Noto Color Emoji | -       | OFL-1.1 | OFL-1.1         |
+| Font           | Version | License | SPDX Identifier |
+|----------------|---------|---------|-----------------|
+| JetBrains Mono | 2.304   | OFL-1.1 | OFL-1.1         |
 
 JetBrains Mono is bundled in the agg Docker image (Debian package
 fonts-jetbrains-mono) and is used to render the terminal text.
-Noto Color Emoji is installed on the runner by runner.sh (Ubuntu package
-fonts-noto-color-emoji) and mounted into agg as an emoji fallback.
 
 License URLs:
 
-- JetBrains Mono:   https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt
-- Noto Color Emoji: https://github.com/googlefonts/noto-emoji/blob/main/LICENSE
+- JetBrains Mono: https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt
 
 ==============================================================================
 LICENSE TEXTS
@@ -108,7 +104,7 @@ Full license text: https://curl.se/docs/copyright.html
 OFL-1.1 (SIL Open Font License 1.1)
 ------------------------------------------------------------------------------
 
-JetBrains Mono and Noto Color Emoji are licensed under OFL-1.1.
+JetBrains Mono is licensed under OFL-1.1.
 Full license text: https://openfontlicense.org/open-font-license-official-text/
 
 ==============================================================================

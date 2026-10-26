@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════
 # Runner Setup Script - Installs dependencies for README animation workflow
-# Run this ONCE on the self-hosted runner
+# Invoked by generate-intro.yml on each run (GitHub-hosted ubuntu runner, requires root)
 # ═══════════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
@@ -15,7 +15,7 @@ echo
 # 1. Install asciinema
 # ─────────────────────────────────────────────────────────────
 
-echo "[1/4] Installing asciinema..."
+echo "[1/3] Installing asciinema..."
 
 if command -v asciinema &>/dev/null; then
     echo "  ✅ asciinema already installed: $(asciinema --version)"
@@ -29,32 +29,25 @@ fi
 # 2. Install additional dependencies
 # ─────────────────────────────────────────────────────────────
 
-echo "[2/4] Installing dependencies (jq, bc, curl)..."
+echo "[2/3] Installing dependencies (jq, bc, curl)..."
 
 apt-get install -y jq bc curl
 echo "  ✅ Dependencies installed"
 
 # ─────────────────────────────────────────────────────────────
-# 3. Install Noto Color Emoji font
+# 3. Build agg Docker image
 # ─────────────────────────────────────────────────────────────
 
-echo "[3/4] Installing Noto Color Emoji font..."
+# Pinned agg commit (main, 2026-08-14). Bump deliberately and verify the GIF output.
+AGG_REF="aae34b012382536c8c01c753e4b609424642a06d"
 
-apt-get install -y fonts-noto-color-emoji
-fc-cache -fv
-echo "  ✅ Noto Color Emoji installed"
-
-# ─────────────────────────────────────────────────────────────
-# 4. Build agg Docker image
-# ─────────────────────────────────────────────────────────────
-
-echo "[4/4] Building agg Docker image..."
+echo "[3/3] Building agg Docker image (${AGG_REF:0:7})..."
 
 if docker images | grep -q "^agg "; then
     echo "  ⚠️  agg image exists, rebuilding..."
 fi
 
-docker build -t agg:latest https://github.com/asciinema/agg.git
+docker build -t agg:latest "https://github.com/asciinema/agg.git#${AGG_REF}"
 
 echo "  ✅ agg image built"
 
