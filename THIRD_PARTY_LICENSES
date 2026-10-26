@@ -1,0 +1,114 @@
+   █████╗ ██████╗  █████╗ ███████╗
+  ██╔══██╗██╔══██╗██╔══██╗██╔════╝
+  ███████║██████╔╝███████║███████╗
+  ██╔══██║██╔══██╗██╔══██║╚════██║
+  ██║  ██║██║  ██║██║  ██║███████║
+  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+
+THIRD PARTY LICENSES
+==============================================================================
+
+Copyright (c) 2025-2026 - Rıza Emre ARAS <r.emrearas@proton.me>
+Licensed under MIT - see LICENSE file for details
+
+This document lists third-party software dependencies and their licenses.
+All dependencies are installed at workflow runtime on the GitHub-hosted
+runner (ubuntu-latest) by .github/main/scripts/runner.sh or are preinstalled
+on the runner image. None of them are distributed with this repository.
+
+==============================================================================
+TOOLS & DEPENDENCIES
+==============================================================================
+
+| Tool       | Version | License          | SPDX Identifier  |
+|------------|---------|------------------|------------------|
+| asciinema  | 2.4.0   | GPL-3.0          | GPL-3.0-only     |
+| agg        | 1.9.0   | GPL-3.0          | GPL-3.0-or-later |
+| gh         | 2.x     | MIT              | MIT              |
+| jq         | 1.7.1   | MIT              | MIT              |
+| bc         | 1.07.1  | GPL-3.0          | GPL-3.0-or-later |
+| curl       | 8.5.0   | curl License     | curl             |
+
+Versions reflect Ubuntu 24.04 (ubuntu-latest) packages. gh is preinstalled
+on the runner image. agg is built from the main branch of its repository as
+a Docker image.
+
+License URLs:
+
+- asciinema:    https://github.com/asciinema/asciinema/blob/develop/LICENSE
+- agg:          https://github.com/asciinema/agg/blob/main/LICENSE
+- gh:           https://github.com/cli/cli/blob/trunk/LICENSE
+- jq:           https://github.com/jqlang/jq/blob/master/COPYING
+- bc:           https://www.gnu.org/software/bc/
+- curl:         https://curl.se/docs/copyright.html
+
+==============================================================================
+ARTWORK
+==============================================================================
+
+| Source     | Version | License | SPDX Identifier |
+|------------|---------|---------|-----------------|
+| neofetch   | 7.1.0   | MIT     | MIT             |
+
+The Arch Linux ASCII art used in workspace-intro.sh is derived from neofetch.
+neofetch itself is not installed or executed.
+
+License URLs:
+
+- neofetch:     https://github.com/dylanaraps/neofetch/blob/master/LICENSE.md
+
+==============================================================================
+FONTS
+==============================================================================
+
+| Font             | Version | License | SPDX Identifier |
+|------------------|---------|---------|-----------------|
+| JetBrains Mono   | 2.304   | OFL-1.1 | OFL-1.1         |
+| Noto Color Emoji | -       | OFL-1.1 | OFL-1.1         |
+
+JetBrains Mono is bundled in the agg Docker image (Debian package
+fonts-jetbrains-mono) and is used to render the terminal text.
+Noto Color Emoji is installed on the runner by runner.sh (Ubuntu package
+fonts-noto-color-emoji) and mounted into agg as an emoji fallback.
+
+License URLs:
+
+- JetBrains Mono:   https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt
+- Noto Color Emoji: https://github.com/googlefonts/noto-emoji/blob/main/LICENSE
+
+==============================================================================
+LICENSE TEXTS
+==============================================================================
+
+------------------------------------------------------------------------------
+GPL-3.0 (GNU General Public License v3.0)
+------------------------------------------------------------------------------
+
+asciinema, agg and bc are licensed under GPL-3.0.
+Full license text: https://www.gnu.org/licenses/gpl-3.0.txt
+
+Note: This project uses these as external tools, not as libraries.
+The GPL-3.0 license applies to the tools themselves, not to this project.
+
+------------------------------------------------------------------------------
+MIT License
+------------------------------------------------------------------------------
+
+gh, jq and neofetch (ASCII art) are licensed under MIT.
+Full license text: https://opensource.org/license/mit
+
+------------------------------------------------------------------------------
+curl License
+------------------------------------------------------------------------------
+
+curl is licensed under the curl License (MIT/X derivative).
+Full license text: https://curl.se/docs/copyright.html
+
+------------------------------------------------------------------------------
+OFL-1.1 (SIL Open Font License 1.1)
+------------------------------------------------------------------------------
+
+JetBrains Mono and Noto Color Emoji are licensed under OFL-1.1.
+Full license text: https://openfontlicense.org/open-font-license-official-text/
+
+==============================================================================
