@@ -6,7 +6,7 @@ Profile and shared configurations for [remrearas](https://github.com/remrearas).
 
 This repository contains:
 
-- **Profile** — Neofetch-style terminal animation displayed on the profile page
+- **Profile** — Neofetch-style terminal animation and ARTEK logo displayed on the profile page
 - **Workflows** — GitHub Actions for automated content generation
 
 ## Pipeline
@@ -17,7 +17,7 @@ flowchart TD
     R["runner.sh<br>(asciinema, jq, bc, curl, agg image)"] --> A
     A["workspace-intro.sh<br>(Bash + GitHub API)"] -->|terminal output| B
     B["asciinema rec<br>120 cols x 24 rows"] -->|recording.cast| C
-    C["agg (Docker)<br>github-dark, 1.5x, 15fps"] -->|assets/intro.gif| D
+    C["agg (Docker)<br>solarized-dark + solarized-light<br>1.5x, 15fps"] -->|assets/intro-dark.gif<br>assets/intro-light.gif| D
     D["git commit & push<br>github-actions bot"] --> E
     E["Profile<br>github.com/remrearas"]
 ```
@@ -29,7 +29,10 @@ flowchart TD
 ├── profile/
 │   └── README.md                ← Profile
 ├── assets/
-│   └── intro.gif                ← Terminal animation (auto-generated)
+│   ├── intro-dark.gif           ← Dark mode animation (auto-generated)
+│   ├── intro-light.gif          ← Light mode animation (auto-generated)
+│   ├── artek-logo-dark.svg      ← Dark mode logo (white)
+│   └── artek-logo-light.svg     ← Light mode logo (#414042)
 ├── scripts/
 │   └── workspace-intro.sh       ← Animation script
 └── .github/
@@ -48,6 +51,8 @@ The script simulates running `neofetch` in a terminal and prints two columns sid
 |--------|----------------------------------------------------------------------|
 | Left   | Arch Linux ASCII art (derived from neofetch)                         |
 | Right  | Name, location, company, website, member since, pinned repositories, color palette |
+
+The color palette shows the six ANSI hues (red, green, yellow, blue, magenta, cyan) in normal and bright rows. Black and white are omitted because they blend into the solarized dark and light backgrounds.
 
 Profile data is fetched from the GitHub REST API and pinned repositories (up to 6) from the GraphQL API using `gh`. In the workflow, `gh` is authenticated with `GH_TOKEN`.
 
@@ -76,11 +81,18 @@ The `generate-intro.yml` workflow runs on a GitHub-hosted runner (`ubuntu-latest
 
 **Trigger:** Manual dispatch
 
-**Theme:** `github-dark` (set via `AGG_THEME` in the workflow)
+A single recording is converted into both variants and committed together:
 
-**Output:** `assets/intro.gif`
+| Output                   | Theme             | Used in profile          |
+|--------------------------|-------------------|--------------------------|
+| `assets/intro-dark.gif`  | `solarized-dark`  | `#gh-dark-mode-only`     |
+| `assets/intro-light.gif` | `solarized-light` | `#gh-light-mode-only`    |
 
 The recording is 120 × 24. The output uses 23 rows; since pinned repositories are limited to 6, it always fits without scrolling.
+
+## Profile Layout
+
+[`profile/README.md`](profile/README.md) shows the intro animation with the ARTEK logo directly below it. The logo is rendered at `width="100%"`, matching the intro width. Each pair (dark/light) is wrapped in a single `<p>` so the hidden variant leaves no extra spacing in either theme.
 
 ## License
 

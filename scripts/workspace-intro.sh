@@ -36,12 +36,12 @@ D='\033[2m'         # Dim
 BBLU='\033[1;34m'; BCYN='\033[1;36m'
 
 # Background (color palette row 1 — normal)
-BG_BLK='\033[40m'; BG_RED='\033[41m'; BG_GRN='\033[42m'; BG_YEL='\033[43m'
-BG_BLU='\033[44m'; BG_MAG='\033[45m'; BG_CYN='\033[46m'; BG_WHT='\033[47m'
+BG_RED='\033[41m'; BG_GRN='\033[42m'; BG_YEL='\033[43m'
+BG_BLU='\033[44m'; BG_MAG='\033[45m'; BG_CYN='\033[46m'
 
 # Background (color palette row 2 — bright)
-BG_BBLK='\033[100m'; BG_BRED='\033[101m'; BG_BGRN='\033[102m'; BG_BYEL='\033[103m'
-BG_BBLU='\033[104m'; BG_BMAG='\033[105m'; BG_BCYN='\033[106m'; BG_BWHT='\033[107m'
+BG_BRED='\033[101m'; BG_BGRN='\033[102m'; BG_BYEL='\033[103m'
+BG_BBLU='\033[104m'; BG_BMAG='\033[105m'; BG_BCYN='\033[106m'
 
 # ═══════════════════════════════════════════════════════════════════════════
 # HELPERS
@@ -74,7 +74,7 @@ fetch_github_data() {
     USER_LOGIN=$(echo "$user_json" | jq -r '.login         // "unknown"')
     USER_LOC=$(echo   "$user_json" | jq -r '.location      // "N/A"')
     USER_COMPANY=$(echo "$user_json" | jq -r '.company     // "N/A"')
-    USER_BLOG=$(echo  "$user_json" | jq -r '.blog          // "N/A"' | sed 's|https\?://\(www\.\)\?||')
+    USER_BLOG=$(echo  "$user_json" | jq -r '.blog          // "N/A"' | sed -E 's#https?://(www\.)?##')
     USER_SINCE=$(echo "$user_json" | jq -r '.created_at    // "unknown"' | cut -c1-10)
 
     # ── Pinned repos (GraphQL) ───────────────────────────────────────────
@@ -178,10 +178,10 @@ main() {
         done
     fi
 
-    # Color palette
+    # Color palette (black/white omitted: they blend into solarized dark/light backgrounds)
     info+=("")
-    info+=("${BG_BLK}   ${BG_RED}   ${BG_GRN}   ${BG_YEL}   ${BG_BLU}   ${BG_MAG}   ${BG_CYN}   ${BG_WHT}   ${R}")
-    info+=("${BG_BBLK}   ${BG_BRED}   ${BG_BGRN}   ${BG_BYEL}   ${BG_BBLU}   ${BG_BMAG}   ${BG_BCYN}   ${BG_BWHT}   ${R}")
+    info+=("${BG_RED}   ${BG_GRN}   ${BG_YEL}   ${BG_BLU}   ${BG_MAG}   ${BG_CYN}   ${R}")
+    info+=("${BG_BRED}   ${BG_BGRN}   ${BG_BYEL}   ${BG_BBLU}   ${BG_BMAG}   ${BG_BCYN}   ${R}")
 
     # ── Print side-by-side ───────────────────────────────────────────────
     local art_color="$BCYN"
